@@ -1,0 +1,436 @@
+/* ==========================================================================
+   BUCU Orbital Action Wheel — High-Tech Purple HUD System
+   Theme: Royal Purple & Neon Amethyst (#a855f7, #c084fc, #7c3aed, #e879f9)
+   ========================================================================== */
+
+:root {
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-title: 'Outfit', sans-serif;
+
+    --purple-primary: #a855f7;
+    --purple-light: #c084fc;
+    --purple-dark: #7c3aed;
+    --purple-neon: #e879f9;
+    --purple-glow: rgba(168, 85, 247, 0.5);
+
+    --color-green: #22c55e;
+    --color-cyan: #06b6d4;
+    --color-yellow: #eab308;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+html, body {
+    background: transparent !important;
+    font-family: var(--font-primary);
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Fullscreen NUI Overlay — 100% Transparent, No Screen Dimming, No CEF Blur Bug */
+#radial-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent !important;
+    pointer-events: auto;
+}
+
+/* Wheel Canvas Wrapper (600px x 600px) */
+.radial-wrap {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: radialPopIn 0.16s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    filter: drop-shadow(0 15px 45px rgba(0, 0, 0, 0.7));
+    pointer-events: auto;
+}
+
+@keyframes radialPopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#radial-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* Orbital Background Lines & Ticks */
+.track-orbit-outer {
+    fill: none;
+    stroke: rgba(168, 85, 247, 0.16);
+    stroke-width: 1;
+    stroke-dasharray: 6, 6;
+}
+
+.track-orbit-mid {
+    fill: none;
+    stroke: rgba(168, 85, 247, 0.22);
+    stroke-width: 1;
+    stroke-dasharray: 4, 4;
+}
+
+.track-orbit-inner {
+    fill: none;
+    stroke: rgba(168, 85, 247, 0.3);
+    stroke-width: 1;
+}
+
+.cardinal-tick {
+    stroke: var(--purple-light);
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+/* ==========================================================================
+   INNER RING (Primary Categories)
+   ========================================================================== */
+.inner-slice {
+    fill: rgba(24, 15, 42, 0.85);
+    stroke: rgba(168, 85, 247, 0.3);
+    stroke-width: 1.5;
+    cursor: pointer;
+    transition: fill 0.14s ease, stroke 0.14s ease, filter 0.14s ease;
+}
+
+.inner-slice:hover,
+.inner-slice.active,
+.inner-item.active .inner-slice {
+    fill: rgba(168, 85, 247, 0.32);
+    stroke: var(--purple-light);
+    stroke-width: 2.4;
+    filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.65));
+}
+
+.inner-text {
+    fill: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--font-title);
+    text-anchor: middle;
+    pointer-events: none;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    transition: fill 0.14s ease;
+}
+
+.inner-item.active .inner-text {
+    fill: var(--purple-neon);
+    font-weight: 800;
+}
+
+.inner-icon {
+    font-size: 22px;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+    transition: transform 0.14s ease;
+}
+
+.inner-item.active .inner-icon {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 8px var(--purple-light));
+}
+
+.inner-chevron {
+    font-family: var(--font-title);
+    font-size: 11px;
+    font-weight: 800;
+    fill: var(--purple-light);
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.inner-item.active .inner-chevron {
+    opacity: 1;
+    fill: #ffffff;
+    transform: scale(1.2);
+}
+
+/* ==========================================================================
+   OUTER SATELLITE ARC (Sub-Menu Slices)
+   ========================================================================== */
+.satellite-ring {
+    animation: satelliteFan 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes satelliteFan {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.satellite-slice {
+    fill: rgba(28, 17, 48, 0.88);
+    stroke: rgba(168, 85, 247, 0.35);
+    stroke-width: 1.6;
+    cursor: pointer;
+    transition: fill 0.14s ease, stroke 0.14s ease, filter 0.14s ease;
+}
+
+.satellite-slice:hover,
+.satellite-slice.active,
+.satellite-item.active .satellite-slice {
+    fill: rgba(232, 121, 249, 0.32);
+    stroke: var(--purple-neon);
+    stroke-width: 2.6;
+    filter: drop-shadow(0 0 15px rgba(232, 121, 249, 0.7));
+}
+
+.satellite-text {
+    fill: #f1f5f9;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: var(--font-title);
+    text-anchor: middle;
+    pointer-events: none;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    transition: fill 0.14s ease;
+}
+
+.satellite-item.active .satellite-text {
+    fill: #ffffff;
+    font-weight: 800;
+}
+
+.satellite-icon {
+    font-size: 20px;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+    transition: transform 0.14s ease;
+}
+
+.satellite-item.active .satellite-icon {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 10px var(--purple-neon));
+}
+
+/* ==========================================================================
+   CENTER CORE HUB (Diameter: 186px)
+   ========================================================================== */
+.radial-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 186px;
+    height: 186px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(28, 18, 50, 0.96) 0%, rgba(14, 9, 26, 0.98) 100%);
+    border: 2px solid rgba(168, 85, 247, 0.45);
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.35), inset 0 0 20px rgba(168, 85, 247, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.radial-center:hover {
+    border-color: var(--purple-light);
+    box-shadow: 0 0 35px rgba(168, 85, 247, 0.55), inset 0 0 25px rgba(168, 85, 247, 0.25);
+}
+
+/* Circular SVG Gauge Progress Ring */
+.center-gauge-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    pointer-events: none;
+}
+
+.gauge-track {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 3.5;
+}
+
+.gauge-fill {
+    fill: none;
+    stroke: url(#gaugeGradient);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 552.92;
+    stroke-dashoffset: 0;
+    filter: drop-shadow(0 0 6px var(--purple-light));
+    transition: stroke-dashoffset 0.4s ease;
+}
+
+/* Center Content Modes */
+.center-content {
+    width: 140px;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 2;
+}
+
+/* Mode A: Ambient Telemetry Hub */
+.center-clock-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.center-time {
+    font-family: var(--font-title);
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.1;
+    letter-spacing: 0.5px;
+}
+
+.center-date {
+    font-size: 8px;
+    font-weight: 700;
+    color: var(--purple-light);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.center-stat-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+    margin: 3px 0;
+}
+
+.center-stat-number {
+    font-family: var(--font-title);
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--purple-neon);
+    text-shadow: 0 0 10px var(--purple-glow);
+}
+
+.center-stat-label {
+    font-size: 8px;
+    font-weight: 700;
+    color: var(--text-muted, #94a3b8);
+    letter-spacing: 0.5px;
+}
+
+.center-telemetry-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px 6px;
+    background: rgba(14, 9, 24, 0.7);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 6px;
+    padding: 4px 6px;
+    margin-top: 2px;
+}
+
+.telemetry-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 8px;
+    font-weight: 700;
+}
+
+.telemetry-label {
+    color: rgba(233, 213, 255, 0.6);
+}
+
+.telemetry-val {
+    color: #ffffff;
+}
+
+.text-green { color: var(--color-green); }
+.text-cyan { color: var(--color-cyan); }
+.text-purple { color: var(--purple-light); }
+
+/* Mode B: Active Selection Preview */
+.preview-icon-wrap {
+    font-size: 34px;
+    line-height: 1;
+    margin-bottom: 4px;
+    filter: drop-shadow(0 0 10px var(--purple-light));
+    transition: transform 0.15s ease;
+}
+
+.preview-title-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    max-width: 130px;
+}
+
+.preview-category-tag {
+    font-size: 8px;
+    font-weight: 800;
+    color: var(--purple-light);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.preview-label {
+    font-family: var(--font-title);
+    font-size: 11px;
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: 0.4px;
+}
+
+.preview-hint {
+    font-size: 7.5px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+    text-transform: uppercase;
+}

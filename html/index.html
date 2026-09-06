@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUCU Orbital Action Wheel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="radial-container" class="hidden">
+        <div class="radial-wrap" id="radial-wrap">
+
+            <!-- Primary Dual-Ring SVG Canvas (ViewBox: 600 x 600) -->
+            <svg id="radial-svg" viewBox="0 0 600 600">
+                <defs>
+                    <!-- Purple Neon Gradient -->
+                    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#c084fc"/>
+                        <stop offset="50%" stop-color="#a855f7"/>
+                        <stop offset="100%" stop-color="#7c3aed"/>
+                    </linearGradient>
+                    <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#e879f9"/>
+                        <stop offset="50%" stop-color="#a855f7"/>
+                        <stop offset="100%" stop-color="#6366f1"/>
+                    </linearGradient>
+                    <filter id="purpleGlow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="6" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                </defs>
+
+                <!-- Background Orbital Lines & Sci-Fi HUD Ticks -->
+                <g class="orbital-tracks">
+                    <circle cx="300" cy="300" r="280" class="track-orbit-outer" />
+                    <circle cx="300" cy="300" r="185" class="track-orbit-mid" />
+                    <circle cx="300" cy="300" r="100" class="track-orbit-inner" />
+                    <!-- Cardinal Marks -->
+                    <line x1="300" y1="12" x2="300" y2="24" class="cardinal-tick" />
+                    <line x1="300" y1="576" x2="300" y2="588" class="cardinal-tick" />
+                    <line x1="12" y1="300" x2="24" y2="300" class="cardinal-tick" />
+                    <line x1="576" y1="300" x2="588" y2="300" class="cardinal-tick" />
+                </g>
+
+                <!-- Layer 1: Outer Satellite Arc Ring (Sub-menu Slices) -->
+                <g id="satellite-ring" class="satellite-ring"></g>
+
+                <!-- Layer 2: Inner Ring (Primary Categories) -->
+                <g id="inner-ring" class="inner-ring"></g>
+            </svg>
+
+            <!-- Center Core Hub (Inspired by High-Tech HUD) -->
+            <div id="radial-center" class="radial-center">
+                <!-- Circular Purple Gauge Progress Ring -->
+                <svg class="center-gauge-svg" viewBox="0 0 186 186">
+                    <circle cx="93" cy="93" r="88" class="gauge-track" />
+                    <circle cx="93" cy="93" r="88" id="gauge-fill" class="gauge-fill" />
+                </svg>
+
+                <!-- Mode A: Ambient Telemetry Hub (Clock, Condition, Stats) -->
+                <div class="center-content" id="center-ambient">
+                    <div class="center-clock-wrap">
+                        <span class="center-time" id="center-time">17:23</span>
+                        <span class="center-date" id="center-date">MON, 07 SEP</span>
+                    </div>
+
+                    <div class="center-stat-wrap">
+                        <span class="center-stat-number" id="center-stat-val">100%</span>
+                        <span class="center-stat-label">VITALITY</span>
+                    </div>
+
+                    <div class="center-telemetry-grid">
+                        <div class="telemetry-row">
+                            <span class="telemetry-label">HP</span>
+                            <span class="telemetry-val text-green" id="center-hp-val">100%</span>
+                        </div>
+                        <div class="telemetry-row">
+                            <span class="telemetry-label">ARMOUR</span>
+                            <span class="telemetry-val text-cyan" id="center-armour-val">100%</span>
+                        </div>
+                        <div class="telemetry-row">
+                            <span class="telemetry-label">BUCU</span>
+                            <span class="telemetry-val text-purple">CORE</span>
+                        </div>
+                        <div class="telemetry-row">
+                            <span class="telemetry-label">PING</span>
+                            <span class="telemetry-val">16ms</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mode B: Active Selection Preview (Transforms on Hover) -->
+                <div class="center-content hidden" id="center-preview">
+                    <div class="preview-icon-wrap" id="preview-icon">⚙️</div>
+                    <div class="preview-title-wrap">
+                        <span class="preview-category-tag" id="preview-category">BUCU CORE</span>
+                        <h4 class="preview-label" id="preview-label">SELECT ACTION</h4>
+                    </div>
+                    <span class="preview-hint" id="preview-hint">RELEASE F1 TO EXECUTE</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Radial Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
